@@ -1,0 +1,4 @@
+﻿  Ubiorbitapi_r2_loader.vcxproj -> D:\Github Code Projects\Cpp\Ubiorbitapi_r2_loader\Release\Ubiorbitapi_r2_loader.dll
+  Invalid number of parameters
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: The command "xcopy /y D:\Github Code Projects\Cpp\Ubiorbitapi_r2_loader\Ubiorbitapi_r2_loader\Orbit.json D:\Github Code Projects\Cpp\Ubiorbitapi_r2_loader\Release\
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: :VCEnd" exited with code 4.
