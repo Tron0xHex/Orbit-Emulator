@@ -10,13 +10,13 @@ struct OrbitMetaDataStorageSingleton
 {
 	static OrbitMetaDataStorageSingleton& GetInstance();
 
-	bool Open(const path& _filePath);
+	bool Open(const path& filePath);
 	string GetName(int saveId);
 	bool SetName(int saveId, const string& name);
 	bool Remove(int saveId);
 private:
-	OrbitSaveMetaDataStorage m_storage;
-	path m_filePath;
+	OrbitSaveMetaDataStorage storage_;
+	path filePath_;
 
 	OrbitMetaDataStorageSingleton() = default;
 	~OrbitMetaDataStorageSingleton() = default;
@@ -34,10 +34,10 @@ inline OrbitMetaDataStorageSingleton& OrbitMetaDataStorageSingleton::GetInstance
 
 inline bool OrbitMetaDataStorageSingleton::Open(const path& _filePath)
 {
-	m_filePath = _filePath;
+	filePath_ = _filePath;
 
-	if (!exists(m_filePath)) {
-		auto fs = fstream(m_filePath, ios::out);
+	if (!exists(filePath_)) {
+		auto fs = fstream(filePath_, ios::out);
 
 		if (fs.is_open())
 		{
@@ -46,11 +46,11 @@ inline bool OrbitMetaDataStorageSingleton::Open(const path& _filePath)
 		}
 	}
 	else {
-		const auto fs = fstream(m_filePath, ios::in);
+		const auto fs = fstream(filePath_, ios::in);
 
 		if (fs.is_open())
 		{
-			m_storage = json::parse(
+			storage_ = json::parse(
 				static_cast<stringstream const&>(stringstream() << fs.rdbuf()).str());
 			return true;
 		}
@@ -59,37 +59,37 @@ inline bool OrbitMetaDataStorageSingleton::Open(const path& _filePath)
 	return false;
 }
 
-inline string OrbitMetaDataStorageSingleton::GetName(int saveId)
+inline string OrbitMetaDataStorageSingleton::GetName(const int saveId)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (m_storage.saves.find(saveIdString) != m_storage.saves.end()) {
-		return m_storage.saves.at(saveIdString);
+	if (storage_.saves.find(saveIdString) != storage_.saves.end()) {
+		return storage_.saves.at(saveIdString);
 	}
 
 	return "";
 }
 
-inline bool OrbitMetaDataStorageSingleton::SetName(int saveId, const string & name)
+inline bool OrbitMetaDataStorageSingleton::SetName(const int saveId, const string & name)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (m_storage.saves.find(saveIdString) != m_storage.saves.end()) {
-		m_storage.saves[saveIdString] = name;
+	if (storage_.saves.find(saveIdString) != storage_.saves.end()) {
+		storage_.saves[saveIdString] = name;
 	}
 	else {
-		m_storage.saves.emplace(saveIdString, name);
+		storage_.saves.emplace(saveIdString, name);
 	}
 
 	return Update();
 }
 
-inline bool OrbitMetaDataStorageSingleton::Remove(int saveId)
+inline bool OrbitMetaDataStorageSingleton::Remove(const int saveId)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (m_storage.saves.find(saveIdString) != m_storage.saves.end()) {
-		m_storage.saves.erase(saveIdString);
+	if (storage_.saves.find(saveIdString) != storage_.saves.end()) {
+		storage_.saves.erase(saveIdString);
 	}
 
 	return Update();
@@ -98,9 +98,9 @@ inline bool OrbitMetaDataStorageSingleton::Remove(int saveId)
 inline bool OrbitMetaDataStorageSingleton::Update() const
 {
 	json json;
-	to_json(json, m_storage);
+	to_json(json, storage_);
 
-	auto fs = fstream(m_filePath, ios::out | ios::trunc);
+	auto fs = fstream(filePath_, ios::out | ios::trunc);
 
 	if (fs)
 	{

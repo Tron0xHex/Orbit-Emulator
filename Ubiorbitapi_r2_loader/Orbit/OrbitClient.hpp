@@ -78,7 +78,6 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 	if (!exists(savesPath)) {
 		if (create_directories(savesPath)) {
 			callBack(svegameListListenerCallBack, requestUniqueId, nullptr, 0);
-			return;
 		}
 	}
 	else {
