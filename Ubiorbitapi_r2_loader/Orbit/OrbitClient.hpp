@@ -41,6 +41,7 @@ namespace mg::orbitclient {
 	};
 }
 
+//------------------------------------------------------------------------------
 inline mg::orbitclient::OrbitClient::OrbitClient()
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
@@ -65,14 +66,14 @@ inline void mg::orbitclient::OrbitClient::StartProcess(unsigned short *, unsigne
 }
 
 //------------------------------------------------------------------------------
-inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUniqueId, IGetSavegameListListener * svegameListListenerCallBack, unsigned int productId)
+inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUniqueId, IGetSavegameListListener * savegameListListenerCallBack, unsigned int productId)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId
-		<< " GetSvegameListListenerCallBack: " << svegameListListenerCallBack
+		<< " GetSavegameListListenerCallBack: " << savegameListListenerCallBack
 		<< " ProductId: " << productId;
 
 	const auto savesPath = GetSavesPath(productId);
-	const auto callBack = reinterpret_cast<IGetSavegameListListener::CallBackPtr>(**svegameListListenerCallBack->callBackPtr);
+	const auto callBack = reinterpret_cast<IGetSavegameListListener::CallBackPtr>(**savegameListListenerCallBack->callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
@@ -80,7 +81,7 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 
 	if (!exists(savesPath)) {
 		if (create_directories(savesPath)) {
-			callBack(svegameListListenerCallBack, requestUniqueId, nullptr, 0);
+			callBack(savegameListListenerCallBack, requestUniqueId, nullptr, 0);
 		}
 	}
 	else {
@@ -106,7 +107,7 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 		}
 
 		if (callBack != nullptr) {
-			callBack(svegameListListenerCallBack, requestUniqueId, *SaveInfoList.data(), SaveInfoList.size());
+			callBack(savegameListListenerCallBack, requestUniqueId, *SaveInfoList.data(), SaveInfoList.size());
 		}
 	}
 }
