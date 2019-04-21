@@ -3,12 +3,11 @@
 #include "../stdafx.h"
 
 namespace mg::orbitclient {
-	struct __declspec(dllexport) SavegameInfo {
-	private:
-		wstring name_;
-		unsigned int id_;
-		unsigned long size_;
-		unsigned long productId_;
+	class  UPLAY_API SavegameInfo {
+		wstring name;
+		unsigned int id;
+		unsigned long size;
+		unsigned long productId;
 	public:
 		SavegameInfo(unsigned int, unsigned int, unsigned long, const wstring&);
 		unsigned int GetSavegameId();
@@ -17,25 +16,29 @@ namespace mg::orbitclient {
 	};
 }
 
+//------------------------------------------------------------------------------
 inline mg::orbitclient::SavegameInfo::SavegameInfo(const unsigned int id, const unsigned int productId, const unsigned long size, const wstring& name)
 {
-	id_ = id;
-	size_ = size;
-	name_ = name;
-	productId_ = productId;
+	this->id = id;
+	this->size = size;
+	this->name = name;
+	this->productId = productId;
 }
 
+//------------------------------------------------------------------------------
 inline unsigned int mg::orbitclient::SavegameInfo::GetSavegameId()
 {
-	return id_;
+	return id;
 }
 
+//------------------------------------------------------------------------------
 inline unsigned int mg::orbitclient::SavegameInfo::GetSize()
 {
-	return size_;
+	return size;
 }
 
+//------------------------------------------------------------------------------
 inline unsigned short const * mg::orbitclient::SavegameInfo::GetName()
 {
-	return reinterpret_cast<const unsigned short*>(&name_.c_str()[0]);
+	return reinterpret_cast<const unsigned short*>(&name.c_str()[0]);
 }

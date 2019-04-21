@@ -21,15 +21,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JsonTypes\Generators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonTypes\helper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonTypes\Profile.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,19 +57,28 @@
     <ClInclude Include="Consts.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JsonTypes\Orbit.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonTypes\OrbitConfig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonTypes\OrbitSaveMetaDataStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OrbitConfigSingleton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrbitMetaDataStorageSingleton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\Generators.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\helper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\Orbit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\OrbitConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjects\Profile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

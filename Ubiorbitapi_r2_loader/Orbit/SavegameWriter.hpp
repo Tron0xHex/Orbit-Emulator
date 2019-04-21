@@ -7,11 +7,10 @@
 #include "Interfaces/ISavegameWriteListener.hpp"
 
 namespace mg::orbitclient {
-	struct __declspec(dllexport) SavegameWriter {
-	private:
-		fstream fs_{};
-		path filePath_{};
-		unsigned int saveId_;
+	class UPLAY_API SavegameWriter {
+		fstream fs{};
+		path filePath{};
+		unsigned int saveId;
 	public:
 		SavegameWriter(const path& savePath, unsigned int saveId);
 		void Close(bool arg);
@@ -20,45 +19,67 @@ namespace mg::orbitclient {
 	};
 }
 
-inline mg::orbitclient::SavegameWriter::SavegameWriter(const path& savePath, unsigned int saveId)
+//------------------------------------------------------------------------------
+inline mg::orbitclient::SavegameWriter::SavegameWriter(const path& filePath, const unsigned int saveId)
 {
-	saveId_ = saveId;
-	filePath_ = savePath;
-	fs_ = fstream(filePath_, ios::out | ios::binary | ios::trunc);
+	this->saveId = saveId;
+	this->filePath = filePath;
 
-	if (!fs_) {
-		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath_.string();
+	// Create a file in a binary mode.
+
+	fs = fstream(filePath, ios::out | ios::binary | ios::trunc);
+
+	if (!fs) {
+		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath.string();
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::SavegameWriter::Close(bool arg)
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 
-	if (fs_.is_open()) {
-		fs_.close();
+	// Check if all is good and close the stream. 
+
+	if (fs.is_open()) {
+		fs.close();
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId, ISavegameWriteListener * savegameWriteListenerCallBack, void *buff, unsigned int numberOfBytes)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " SavegameWriteListenerCallBack: " << savegameWriteListenerCallBack
 		<< " Buff: " << buff << " NumberOfBytes: " << numberOfBytes;
 
+	// Cast the class to the callback.
+
 	const auto callBack = reinterpret_cast<ISavegameWriteListener::CallBackPtr>(**savegameWriteListenerCallBack->callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	fs_.seekg(0, ios::beg);
+	// Set file pointer to start.
 
-	const auto currentPos = fs_.tellp();
+	fs.seekg(0, ios::beg);
 
-	fs_.write(&reinterpret_cast<char*>(buff)[0], numberOfBytes);
+	// Get current pos.
 
-	if (fs_) {
-		const auto bytesCount = fs_.tellp() - currentPos;
+	const auto currentPos = fs.tellp();
+
+	// Write data.
+
+	fs.write(&reinterpret_cast<char*>(buff)[0], numberOfBytes);
+
+	// Check if all is good.
+
+	if (fs) {
+		// Get the number of bytes written.
+
+		const auto bytesCount = fs.tellp() - currentPos;
 
 		LOGD_IF(UPLAY_LOG) << "Bytes count: " << bytesCount;
+
+		// Execute the callback.
 
 		if (bytesCount > 0 && callBack != nullptr) {
 			callBack(savegameWriteListenerCallBack, requestUniqueId, bytesCount);
@@ -66,17 +87,22 @@ inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
 	}
 	else
 	{
-		LOGD_IF(UPLAY_LOG) << "Unable to write file: " << filePath_.string();
+		LOGD_IF(UPLAY_LOG) << "Unable to write file: " << filePath.string();
 	}
 }
 
+//------------------------------------------------------------------------------
 inline bool mg::orbitclient::SavegameWriter::SetName(unsigned short * name)
 {
+	// Check the ptr for null.
+
 	if (name) {
+		// Convert the save name to wstring and then to string.
+
 		const auto utf8Name = wstring(reinterpret_cast<wchar_t*>(name));
 		const auto utf8NameString = string(utf8Name.begin(), utf8Name.end());
 
-		return OrbitMetaDataStorageSingleton::GetInstance().SetName(saveId_, utf8NameString);
+		return OrbitMetaDataStorageSingleton::GetInstance().SetName(saveId, utf8NameString);
 	}
 
 	return false;

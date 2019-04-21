@@ -14,14 +14,13 @@
 #include "Interfaces/IGetSavegameReaderListener.hpp"
 #include "Interfaces/IGetLoginDetailsListener.hpp"
 
-static shared_ptr<mg::orbitclient::SavegameReader> saveGameReader{ nullptr };
-static shared_ptr<mg::orbitclient::SavegameWriter> saveGameWriter{ nullptr };
-static vector<mg::orbitclient::SavegameInfo*> saveInfos{ nullptr };
+static shared_ptr<mg::orbitclient::SavegameReader> SaveGameReader{ nullptr };
+static shared_ptr<mg::orbitclient::SavegameWriter> SaveGameWriter{ nullptr };
+static vector<mg::orbitclient::SavegameInfo*> SaveInfoList{ nullptr };
 
 namespace mg::orbitclient {
-	struct __declspec(dllexport) OrbitClient {
-	private:
-		atomic_int requestUniqueId_ = 0;
+	class UPLAY_API OrbitClient {
+		atomic_int requestUniqueId = 0;
 
 		path GetSavePath(unsigned int productId, unsigned int saveId);
 		path GetSavesPath(unsigned int productId);
@@ -30,10 +29,10 @@ namespace mg::orbitclient {
 		void StartProcess(unsigned short *, unsigned short *, unsigned short *);
 		bool StartLauncher(unsigned int, unsigned int, char const *, char const *);
 		void GetSavegameList(unsigned int requestUniqueId, IGetSavegameListListener * savegameListListenerCallBack, unsigned int productId);
-		void GetSavegameWriter(unsigned int requestUniqueId, IGetSavegameWriterListener *, unsigned int productId, unsigned int saveGameId, bool open);
-		void GetSavegameReader(unsigned int requestUniqueId, IGetSavegameReaderListener *, unsigned int productId, unsigned int saveGameId);
-		void RemoveSavegame(unsigned int requestUniqueId, IRemoveSavegameListener *, unsigned int productId, unsigned int saveGameId);
-		void GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener *);
+		void GetSavegameWriter(unsigned int requestUniqueId, IGetSavegameWriterListener * savegameWriterListenerCallBack, unsigned int productId, unsigned int saveGameId, bool open);
+		void GetSavegameReader(unsigned int requestUniqueId, IGetSavegameReaderListener * savegameReaderListenerCallBack, unsigned int productId, unsigned int saveGameId);
+		void RemoveSavegame(unsigned int requestUniqueId, IRemoveSavegameListener * removeSavegameListenerCallBack, unsigned int productId, unsigned int saveGameId);
+		void GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener * getLoginDetailsListenerCallBack);
 		unsigned int GetRequestUniqueId();
 		unsigned short * GetInstallationErrorString(char const *);
 		unsigned int GetInstallationErrorNum();
@@ -47,21 +46,25 @@ inline mg::orbitclient::OrbitClient::OrbitClient()
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 }
 
+//------------------------------------------------------------------------------
 inline path mg::orbitclient::OrbitClient::GetSavePath(unsigned int productId, unsigned int saveId)
 {
 	return path(OrbitConfigSingleton::GetInstance().config.orbit.saves) / path(to_string(productId)) / path(to_string(saveId) + Consts::SaveFileExtension);
 }
 
+//------------------------------------------------------------------------------
 inline path mg::orbitclient::OrbitClient::GetSavesPath(unsigned int productId)
 {
 	return path(OrbitConfigSingleton::GetInstance().config.orbit.saves) / path(to_string(productId));
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::StartProcess(unsigned short *, unsigned short *, unsigned short *)
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUniqueId, IGetSavegameListListener * svegameListListenerCallBack, unsigned int productId)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId
@@ -81,11 +84,11 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 		}
 	}
 	else {
-		for (auto& saveInfo : saveInfos) {
+		for (auto& saveInfo : SaveInfoList) {
 			delete saveInfo;
 		}
 
-		saveInfos.clear();
+		SaveInfoList.clear();
 
 		for (const auto &dirEntry : directory_iterator(savesPath)) {
 			const auto file = dirEntry.path();
@@ -98,60 +101,66 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 
 				LOGD_IF(UPLAY_LOG) << "Save - " << " id: " << id << " size: " << fileSize << " name: " << name << " this ptr: " << saveGameInfo;
 
-				saveInfos.push_back(saveGameInfo);
+				SaveInfoList.push_back(saveGameInfo);
 			}
 		}
 
 		if (callBack != nullptr) {
-			callBack(svegameListListenerCallBack, requestUniqueId, *saveInfos.data(), saveInfos.size());
+			callBack(svegameListListenerCallBack, requestUniqueId, *SaveInfoList.data(), SaveInfoList.size());
 		}
 	}
 }
 
-inline void mg::orbitclient::OrbitClient::GetSavegameReader(unsigned int requestUniqueId, IGetSavegameReaderListener * getSavegameReaderListenerCallBack, unsigned int productId, unsigned int saveId)
+//------------------------------------------------------------------------------
+inline void mg::orbitclient::OrbitClient::GetSavegameReader(unsigned int requestUniqueId, IGetSavegameReaderListener * savegameReaderListenerCallBack, unsigned int productId, unsigned int saveId)
 {
-	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameReaderListenerCallBack: " << getSavegameReaderListenerCallBack
+	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameReaderListenerCallBack: " << savegameReaderListenerCallBack
 		<< " ProductId: " << productId << " SaveId: " << saveId;
 
-	const auto callBack = reinterpret_cast<IGetSavegameReaderListener::CallBackPtr>(**getSavegameReaderListenerCallBack->callBackPtr);
+	const auto callBack = reinterpret_cast<IGetSavegameReaderListener::CallBackPtr>(**savegameReaderListenerCallBack->callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	saveGameReader = std::make_shared<SavegameReader>(GetSavePath(productId, saveId));
+	SaveGameReader = std::make_shared<SavegameReader>(GetSavePath(productId, saveId));
 
 	if (callBack != nullptr) {
-		callBack(getSavegameReaderListenerCallBack, requestUniqueId, NULL, saveGameReader.get());
+		callBack(savegameReaderListenerCallBack, requestUniqueId, NULL, SaveGameReader.get());
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::Update()
 {
 
 }
 
+//------------------------------------------------------------------------------
 inline bool mg::orbitclient::OrbitClient::StartLauncher(unsigned int, unsigned int, char const *, char const *)
 {
 	return false;
 }
 
+//------------------------------------------------------------------------------
 inline unsigned short * mg::orbitclient::OrbitClient::GetInstallationErrorString(char const * err)
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 	return nullptr;
 }
 
+//------------------------------------------------------------------------------
 inline unsigned int mg::orbitclient::OrbitClient::GetInstallationErrorNum()
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 	return 0;
 }
 
-inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int requestUniqueId, IGetSavegameWriterListener * getSavegameWriterListenerCallBack, unsigned int productId, unsigned int saveId, bool open)
+//------------------------------------------------------------------------------
+inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int requestUniqueId, IGetSavegameWriterListener * savegameWriterListenerCallBack, unsigned int productId, unsigned int saveId, bool open)
 {
-	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameWriterListenerCallBack: " << getSavegameWriterListenerCallBack
+	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameWriterListenerCallBack: " << savegameWriterListenerCallBack
 		<< " ProductId: " << productId << " SaveId: " << saveId;
 
-	const auto callBack = reinterpret_cast<IGetSavegameWriterListener::CallBackPtr>(**getSavegameWriterListenerCallBack->callBackPtr);
+	const auto callBack = reinterpret_cast<IGetSavegameWriterListener::CallBackPtr>(**savegameWriterListenerCallBack->callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
@@ -162,13 +171,14 @@ inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int request
 		create_directories(gameSavesPath);
 	}
 
-	saveGameWriter = std::make_shared<SavegameWriter>(GetSavePath(productId, saveId), saveId);
+	SaveGameWriter = std::make_shared<SavegameWriter>(GetSavePath(productId, saveId), saveId);
 
 	if (callBack != nullptr) {
-		callBack(getSavegameWriterListenerCallBack, requestUniqueId, NULL, saveGameWriter.get());
+		callBack(savegameWriterListenerCallBack, requestUniqueId, NULL, SaveGameWriter.get());
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUniqueId, IRemoveSavegameListener * removeSavegameListenerCallBack, unsigned int productId, unsigned int saveId)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " RemoveSavegameListenerCallBack: " << removeSavegameListenerCallBack;
@@ -189,11 +199,12 @@ inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUni
 	}
 }
 
-inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener * getLoginDetailsListenerCallBack)
+//------------------------------------------------------------------------------
+inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener * loginDetailsListenerCallBack)
 {
-	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetLoginDetailsListenerCallBack: " << getLoginDetailsListenerCallBack;
+	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetLoginDetailsListenerCallBack: " << loginDetailsListenerCallBack;
 
-	const auto callBack = reinterpret_cast<IGetLoginDetailsListener::CallBackPtr>(**getLoginDetailsListenerCallBack->callBackPtr);
+	const auto callBack = reinterpret_cast<IGetLoginDetailsListener::CallBackPtr>(**loginDetailsListenerCallBack->callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
@@ -204,26 +215,28 @@ inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUn
 	const auto password = profile.password.c_str();
 
 	if (callBack != nullptr) {
-		callBack(getLoginDetailsListenerCallBack, requestUniqueId, accountId, userName, password);
+		callBack(loginDetailsListenerCallBack, requestUniqueId, accountId, userName, password);
 	}
 }
 
+//------------------------------------------------------------------------------
 inline unsigned int mg::orbitclient::OrbitClient::GetRequestUniqueId()
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
-	return ++requestUniqueId_;
+	return ++requestUniqueId;
 }
 
+//------------------------------------------------------------------------------
 inline mg::orbitclient::OrbitClient::~OrbitClient()
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 
-	saveGameReader.reset();
-	saveGameWriter.reset();
+	SaveGameReader.reset();
+	SaveGameWriter.reset();
 
-	for (auto& saveInfo : saveInfos) {
+	for (auto& saveInfo : SaveInfoList) {
 		delete saveInfo;
 	}
 
-	saveInfos.clear();
+	SaveInfoList.clear();
 }

@@ -3,36 +3,38 @@
 #include "Interfaces/ISavegameReadListener.hpp"
 
 namespace mg::orbitclient {
-	struct __declspec(dllexport) SavegameReader {
-	private:
-		fstream fs_{};
-		path filePath_{};
+	class UPLAY_API SavegameReader {
+		fstream fs{};
+		path filePath{};
 	public:
 		SavegameReader(const path& savePath);
 		void Close();
-		void Read(unsigned int requestUniqueId, ISavegameReadListener *, unsigned int offset, void * buff, unsigned int numberOfBytes);
+		void Read(unsigned int requestUniqueId, ISavegameReadListener * savegameReadListenerCallBack, unsigned int offset, void * buff, unsigned int numberOfBytes);
 	};
 }
 
+//------------------------------------------------------------------------------
 inline mg::orbitclient::SavegameReader::SavegameReader(const path& savePath)
 {
-	filePath_ = savePath;
-	fs_ = fstream(filePath_, ios::in | ios::binary);
+	filePath = savePath;
+	fs = fstream(filePath, ios::in | ios::binary);
 
-	if (!fs_) {
-		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath_.string();
+	if (!fs) {
+		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath.string();
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::SavegameReader::Close()
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 
-	if (fs_.is_open()) {
-		fs_.close();
+	if (fs.is_open()) {
+		fs.close();
 	}
 }
 
+//------------------------------------------------------------------------------
 inline void mg::orbitclient::SavegameReader::Read(unsigned int requestUniqueId, ISavegameReadListener * savegameReadListenerCallBack, unsigned int offset, void *buff, unsigned int numberOfBytes)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " SavegameReadListenerCallBack: " << savegameReadListenerCallBack
@@ -42,11 +44,11 @@ inline void mg::orbitclient::SavegameReader::Read(unsigned int requestUniqueId, 
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	fs_.seekg(0, ios::beg);
-	fs_.read(&static_cast<char*>(buff)[0], numberOfBytes);
+	fs.seekg(0, ios::beg);
+	fs.read(&static_cast<char*>(buff)[0], numberOfBytes);
 
-	if (fs_) {
-		const auto bytesCount = static_cast<unsigned int>(fs_.gcount());
+	if (fs) {
+		const auto bytesCount = static_cast<unsigned int>(fs.gcount());
 
 		LOGD_IF(UPLAY_LOG) << "Bytes count: " << bytesCount;
 
@@ -55,6 +57,6 @@ inline void mg::orbitclient::SavegameReader::Read(unsigned int requestUniqueId, 
 		}
 	}
 	else {
-		LOGD_IF(UPLAY_LOG) << "Unable to read file: " << filePath_.string();
+		LOGD_IF(UPLAY_LOG) << "Unable to read file: " << filePath.string();
 	}
 }

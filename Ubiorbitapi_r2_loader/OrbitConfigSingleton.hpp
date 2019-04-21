@@ -1,8 +1,8 @@
 #pragma once
 
 #include "stdafx.h"
-#include "JsonTypes/Generators.hpp"
-#include "JsonTypes/OrbitConfig.hpp"
+#include "JsonObjects/Generators.hpp"
+#include "JsonObjects/OrbitConfig.hpp"
 
 using namespace UbiorbitapiR2Loader;
 
@@ -18,12 +18,14 @@ private:
 	OrbitConfigSingleton& operator=(const OrbitConfigSingleton&) = delete;
 };
 
+//------------------------------------------------------------------------------
 inline OrbitConfigSingleton& OrbitConfigSingleton::GetInstance()
 {
 	static OrbitConfigSingleton instance;
 	return instance;
 }
 
+//------------------------------------------------------------------------------
 inline void OrbitConfigSingleton::Open(const path& file)
 {
 	const auto fs = fstream(file, ios::in);
