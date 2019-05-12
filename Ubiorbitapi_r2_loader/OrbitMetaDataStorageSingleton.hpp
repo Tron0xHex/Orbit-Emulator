@@ -6,51 +6,39 @@
 
 using namespace UbiorbitapiR2Loader;
 
-struct OrbitMetaDataStorageSingleton
+struct OrbitMetaDataStorageHolder
 {
-	static OrbitMetaDataStorageSingleton& GetInstance();
-
 	bool Open(const path& filePath);
-	string GetName(int saveId);
 	bool SetName(int saveId, const string& name);
+	string GetName(int saveId);
 	bool Remove(int saveId);
-private:
-	OrbitSaveMetaDataStorage storage;
-	path filePath;
-
-	OrbitMetaDataStorageSingleton() = default;
-	~OrbitMetaDataStorageSingleton() = default;
-	OrbitMetaDataStorageSingleton(const OrbitMetaDataStorageSingleton&) = delete;
-	OrbitMetaDataStorageSingleton& operator=(const OrbitMetaDataStorageSingleton&) = delete;
-
 	bool Update() const;
+
+private:
+	path filePath;
+	OrbitSaveMetaDataStorage storage;
 };
 
 //------------------------------------------------------------------------------
-inline OrbitMetaDataStorageSingleton& OrbitMetaDataStorageSingleton::GetInstance()
-{
-	static OrbitMetaDataStorageSingleton instance;
-	return instance;
-}
-
-//------------------------------------------------------------------------------
-inline bool OrbitMetaDataStorageSingleton::Open(const path& filePath)
+inline bool OrbitMetaDataStorageHolder::Open(const path& filePath)
 {
 	this->filePath = filePath;
 
-	if (!exists(filePath)) {
+	if (!exists(filePath))
+	{
 		auto fs = fstream(filePath, ios::out);
 
-		if (fs.is_open())
+		if (fs)
 		{
 			fs << R"({"Saves": {}})"_json.dump(4) << endl;
 			return true;
 		}
 	}
-	else {
+	else
+	{
 		const auto fs = fstream(filePath, ios::in);
 
-		if (fs.is_open())
+		if (fs)
 		{
 			storage = json::parse(
 				static_cast<stringstream const&>(stringstream() << fs.rdbuf()).str());
@@ -62,11 +50,12 @@ inline bool OrbitMetaDataStorageSingleton::Open(const path& filePath)
 }
 
 //------------------------------------------------------------------------------
-inline string OrbitMetaDataStorageSingleton::GetName(const int saveId)
+inline string OrbitMetaDataStorageHolder::GetName(const int saveId)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (storage.saves.find(saveIdString) != storage.saves.end()) {
+	if (storage.saves.find(saveIdString) != storage.saves.end())
+	{
 		return storage.saves.at(saveIdString);
 	}
 
@@ -74,14 +63,16 @@ inline string OrbitMetaDataStorageSingleton::GetName(const int saveId)
 }
 
 //------------------------------------------------------------------------------
-inline bool OrbitMetaDataStorageSingleton::SetName(const int saveId, const string & name)
+inline bool OrbitMetaDataStorageHolder::SetName(const int saveId, const string& name)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (storage.saves.find(saveIdString) != storage.saves.end()) {
+	if (storage.saves.find(saveIdString) != storage.saves.end())
+	{
 		storage.saves[saveIdString] = name;
 	}
-	else {
+	else
+	{
 		storage.saves.emplace(saveIdString, name);
 	}
 
@@ -89,11 +80,12 @@ inline bool OrbitMetaDataStorageSingleton::SetName(const int saveId, const strin
 }
 
 //------------------------------------------------------------------------------
-inline bool OrbitMetaDataStorageSingleton::Remove(const int saveId)
+inline bool OrbitMetaDataStorageHolder::Remove(const int saveId)
 {
 	const auto saveIdString = to_string(saveId);
 
-	if (storage.saves.find(saveIdString) != storage.saves.end()) {
+	if (storage.saves.find(saveIdString) != storage.saves.end())
+	{
 		storage.saves.erase(saveIdString);
 	}
 
@@ -101,7 +93,7 @@ inline bool OrbitMetaDataStorageSingleton::Remove(const int saveId)
 }
 
 //------------------------------------------------------------------------------
-inline bool OrbitMetaDataStorageSingleton::Update() const
+inline bool OrbitMetaDataStorageHolder::Update() const
 {
 	json json;
 	to_json(json, storage);
@@ -117,3 +109,21 @@ inline bool OrbitMetaDataStorageSingleton::Update() const
 	return false;
 }
 
+struct OrbitMetaDataStorageSingleton
+{
+	OrbitMetaDataStorageHolder orbitMetaDataStorageHolder;
+	static OrbitMetaDataStorageSingleton& GetInstance();
+
+private:
+	OrbitMetaDataStorageSingleton() = default;
+	~OrbitMetaDataStorageSingleton() = default;
+	OrbitMetaDataStorageSingleton(const OrbitMetaDataStorageSingleton&) = delete;
+	OrbitMetaDataStorageSingleton& operator=(const OrbitMetaDataStorageSingleton&) = delete;
+};
+
+//------------------------------------------------------------------------------
+inline OrbitMetaDataStorageSingleton& OrbitMetaDataStorageSingleton::GetInstance()
+{
+	static OrbitMetaDataStorageSingleton instance;
+	return instance;
+}

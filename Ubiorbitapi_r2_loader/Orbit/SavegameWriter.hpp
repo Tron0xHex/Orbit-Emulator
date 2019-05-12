@@ -6,16 +6,19 @@
 
 #include "Interfaces/ISavegameWriteListener.hpp"
 
-namespace mg::orbitclient {
-	class UPLAY_API SavegameWriter {
+namespace mg::orbitclient
+{
+	class UPLAY_API SavegameWriter
+	{
 		fstream fs{};
 		path filePath{};
 		unsigned int saveId;
 	public:
 		SavegameWriter(const path& savePath, unsigned int saveId);
 		void Close(bool arg);
-		void Write(unsigned int requestId, ISavegameWriteListener * savegameWriteListenerCallBack, void * buff, unsigned int numberOfBytes);
-		bool SetName(unsigned short * name);
+		void Write(unsigned int requestId, ISavegameWriteListener* savegameWriteListenerCallBack, void* buff,
+		           unsigned int numberOfBytes);
+		bool SetName(unsigned short* name);
 	};
 }
 
@@ -29,7 +32,8 @@ inline mg::orbitclient::SavegameWriter::SavegameWriter(const path& filePath, con
 
 	fs = fstream(filePath, ios::out | ios::binary | ios::trunc);
 
-	if (!fs) {
+	if (!fs)
+	{
 		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath.string();
 	}
 }
@@ -41,20 +45,25 @@ inline void mg::orbitclient::SavegameWriter::Close(bool arg)
 
 	// Check if all is good and close the stream. 
 
-	if (fs.is_open()) {
+	if (fs)
+	{
 		fs.close();
 	}
 }
 
 //------------------------------------------------------------------------------
-inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId, ISavegameWriteListener * savegameWriteListenerCallBack, void *buff, unsigned int numberOfBytes)
+inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
+                                                   ISavegameWriteListener* savegameWriteListenerCallBack, void* buff,
+                                                   unsigned int numberOfBytes)
 {
-	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " SavegameWriteListenerCallBack: " << savegameWriteListenerCallBack
+	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " SavegameWriteListenerCallBack: " <<
+		savegameWriteListenerCallBack
 		<< " Buff: " << buff << " NumberOfBytes: " << numberOfBytes;
 
 	// Cast the class to the callback.
 
-	const auto callBack = reinterpret_cast<ISavegameWriteListener::CallBackPtr>(**savegameWriteListenerCallBack->callBackPtr);
+	const auto callBack = reinterpret_cast<ISavegameWriteListener::CallBackPtr>(**savegameWriteListenerCallBack->
+		callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
@@ -72,7 +81,8 @@ inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
 
 	// Check if all is good.
 
-	if (fs) {
+	if (fs)
+	{
 		// Get the number of bytes written.
 
 		const auto bytesCount = fs.tellp() - currentPos;
@@ -81,7 +91,8 @@ inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
 
 		// Execute the callback.
 
-		if (bytesCount > 0 && callBack != nullptr) {
+		if (bytesCount > 0 && callBack != nullptr)
+		{
 			callBack(savegameWriteListenerCallBack, requestUniqueId, bytesCount);
 		}
 	}
@@ -92,17 +103,18 @@ inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
 }
 
 //------------------------------------------------------------------------------
-inline bool mg::orbitclient::SavegameWriter::SetName(unsigned short * name)
+inline bool mg::orbitclient::SavegameWriter::SetName(unsigned short* name)
 {
 	// Check the ptr for null.
 
-	if (name) {
+	if (name)
+	{
 		// Convert the save name to wstring and then to string.
 
 		const auto utf8Name = wstring(reinterpret_cast<wchar_t*>(name));
 		const auto utf8NameString = string(utf8Name.begin(), utf8Name.end());
 
-		return OrbitMetaDataStorageSingleton::GetInstance().SetName(saveId, utf8NameString);
+		return OrbitMetaDataStorageSingleton::GetInstance().orbitMetaDataStorageHolder.SetName(saveId, utf8NameString);
 	}
 
 	return false;

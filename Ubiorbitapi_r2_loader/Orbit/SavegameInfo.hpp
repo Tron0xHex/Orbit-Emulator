@@ -2,8 +2,10 @@
 
 #include "../stdafx.h"
 
-namespace mg::orbitclient {
-	class  UPLAY_API SavegameInfo {
+namespace mg::orbitclient
+{
+	class UPLAY_API SavegameInfo
+	{
 		wstring name;
 		unsigned int id;
 		unsigned long size;
@@ -12,12 +14,13 @@ namespace mg::orbitclient {
 		SavegameInfo(unsigned int, unsigned int, unsigned long, const wstring&);
 		unsigned int GetSavegameId();
 		unsigned int GetSize();
-		unsigned short const * GetName();
+		unsigned short const* GetName();
 	};
 }
 
 //------------------------------------------------------------------------------
-inline mg::orbitclient::SavegameInfo::SavegameInfo(const unsigned int id, const unsigned int productId, const unsigned long size, const wstring& name)
+inline mg::orbitclient::SavegameInfo::SavegameInfo(const unsigned int id, const unsigned int productId,
+                                                   const unsigned long size, const wstring& name)
 {
 	this->id = id;
 	this->size = size;
@@ -38,7 +41,7 @@ inline unsigned int mg::orbitclient::SavegameInfo::GetSize()
 }
 
 //------------------------------------------------------------------------------
-inline unsigned short const * mg::orbitclient::SavegameInfo::GetName()
+inline unsigned short const* mg::orbitclient::SavegameInfo::GetName()
 {
 	return reinterpret_cast<const unsigned short*>(&name.c_str()[0]);
 }

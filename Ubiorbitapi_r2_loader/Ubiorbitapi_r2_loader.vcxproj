@@ -162,10 +162,10 @@
     <ClInclude Include="Consts.hpp" />
     <ClInclude Include="JsonObjects\Generators.hpp" />
     <ClInclude Include="JsonObjects\helper.hpp" />
-    <ClInclude Include="JsonObjects\Profile.hpp" />
     <ClInclude Include="JsonObjects\Orbit.hpp" />
     <ClInclude Include="JsonObjects\OrbitConfig.hpp" />
     <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp" />
+    <ClInclude Include="JsonObjects\Profile.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameListListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameReaderListener.hpp" />
