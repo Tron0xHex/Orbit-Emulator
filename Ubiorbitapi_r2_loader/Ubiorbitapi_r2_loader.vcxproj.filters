@@ -99,6 +99,15 @@
     <ClInclude Include="JsonObjects\Profile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="OrbitConfigHolder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbitMetaDataStorageHolder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+=======
+>>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

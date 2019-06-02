@@ -166,6 +166,11 @@
     <ClInclude Include="JsonObjects\OrbitConfig.hpp" />
     <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp" />
     <ClInclude Include="JsonObjects\Profile.hpp" />
+<<<<<<< HEAD
+    <ClInclude Include="OrbitConfigHolder.hpp" />
+    <ClInclude Include="OrbitMetaDataStorageHolder.hpp" />
+=======
+>>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
     <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameListListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameReaderListener.hpp" />

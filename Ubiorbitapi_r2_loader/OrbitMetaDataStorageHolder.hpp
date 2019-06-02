@@ -1,34 +1,20 @@
 #pragma once
 
-#include "stdafx.h"
-#include "OrbitMetaDataStorageHolder.hpp"
-
-using namespace UbiorbitapiR2Loader;
+#include "JsonObjects/Generators.hpp"
+#include "JsonObjects/OrbitSaveMetaDataStorage.hpp"
 
 struct OrbitMetaDataStorageHolder
 {
-<<<<<<< HEAD
-	OrbitMetaDataStorageHolder orbitMetaDataStorageHolder;
-	static OrbitMetaDataStorageSingleton& GetInstance();
-
 private:
-	OrbitMetaDataStorageSingleton() = default;
-	~OrbitMetaDataStorageSingleton() = default;
-	OrbitMetaDataStorageSingleton(const OrbitMetaDataStorageSingleton&) = delete;
-	OrbitMetaDataStorageSingleton& operator=(const OrbitMetaDataStorageSingleton&) = delete;
-};
+	path filePath;
+	OrbitSaveMetaDataStorage storage;
 
-//------------------------------------------------------------------------------
-=======
+public:
 	bool Open(const path& filePath);
 	bool SetName(int saveId, const string& name);
 	string GetName(int saveId);
 	bool Remove(int saveId);
 	bool Update() const;
-
-private:
-	path filePath;
-	OrbitSaveMetaDataStorage storage;
 };
 
 //------------------------------------------------------------------------------
@@ -119,24 +105,4 @@ inline bool OrbitMetaDataStorageHolder::Update() const
 	}
 
 	return false;
-}
-
-struct OrbitMetaDataStorageSingleton
-{
-	OrbitMetaDataStorageHolder orbitMetaDataStorageHolder;
-	static OrbitMetaDataStorageSingleton& GetInstance();
-
-private:
-	OrbitMetaDataStorageSingleton() = default;
-	~OrbitMetaDataStorageSingleton() = default;
-	OrbitMetaDataStorageSingleton(const OrbitMetaDataStorageSingleton&) = delete;
-	OrbitMetaDataStorageSingleton& operator=(const OrbitMetaDataStorageSingleton&) = delete;
-};
-
-//------------------------------------------------------------------------------
->>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
-inline OrbitMetaDataStorageSingleton& OrbitMetaDataStorageSingleton::GetInstance()
-{
-	static OrbitMetaDataStorageSingleton instance;
-	return instance;
 }

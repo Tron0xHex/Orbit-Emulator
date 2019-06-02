@@ -2,13 +2,19 @@
 
 #include "stdafx.h"
 
+<<<<<<< HEAD
+#include "OrbitConfigHolder.hpp"
+=======
 #include "JsonObjects/Generators.hpp"
 #include "JsonObjects/OrbitConfig.hpp"
+>>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
 
 using namespace UbiorbitapiR2Loader;
 
 struct OrbitConfigHolder
 {
+<<<<<<< HEAD
+=======
 	OrbitConfig config;
 	void Open(const path&);
 };
@@ -24,6 +30,7 @@ inline void OrbitConfigHolder::Open(const path& file)
 
 struct OrbitConfigSingleton
 {
+>>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
 	OrbitConfigHolder configHolder;
 	static OrbitConfigSingleton& GetInstance();
 private:
