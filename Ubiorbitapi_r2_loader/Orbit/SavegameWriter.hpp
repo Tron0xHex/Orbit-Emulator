@@ -114,7 +114,7 @@ inline bool mg::orbitclient::SavegameWriter::SetName(unsigned short* name)
 		const auto utf8Name = wstring(reinterpret_cast<wchar_t*>(name));
 		const auto utf8NameString = string(utf8Name.begin(), utf8Name.end());
 
-		return OrbitMetaDataStorageSingleton::GetInstance().orbitMetaDataStorageHolder.SetName(saveId, utf8NameString);
+		return UbiorbitapiR2Loader::OrbitMetaDataStorageSingleton::GetInstance().orbitMetaDataStorageHolder.SetName(saveId, utf8NameString);
 	}
 
 	return false;

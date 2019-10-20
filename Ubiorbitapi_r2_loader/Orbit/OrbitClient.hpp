@@ -56,14 +56,16 @@ inline mg::orbitclient::OrbitClient::OrbitClient()
 //------------------------------------------------------------------------------
 inline path mg::orbitclient::OrbitClient::GetSavePath(unsigned int productId, unsigned int saveId)
 {
-	return path(OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(to_string(productId)) /
-		path(to_string(saveId) + Consts::SaveFileExtension);
+	return path(UbiorbitapiR2Loader::OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(
+			to_string(productId)) /
+		path(to_string(saveId) + UbiorbitapiR2Loader::Consts::SaveFileExtension);
 }
 
 //------------------------------------------------------------------------------
 inline path mg::orbitclient::OrbitClient::GetSavesPath(unsigned int productId)
 {
-	return path(OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(to_string(productId));
+	return path(UbiorbitapiR2Loader::OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(
+		to_string(productId));
 }
 
 //------------------------------------------------------------------------------
@@ -111,12 +113,13 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 		{
 			const auto file = dirEntry.path();
 
-			if (file.has_extension() && file.extension() == Consts::SaveFileExtension)
+			if (file.has_extension() && file.extension() == UbiorbitapiR2Loader::Consts::SaveFileExtension)
 			{
 				const auto id = static_cast<unsigned int>(atoi(file.stem().string().c_str()));
 				const auto fileSize = static_cast<unsigned long>(file_size(file));
 				const auto name = converter.from_bytes(
-					OrbitMetaDataStorageSingleton::GetInstance().orbitMetaDataStorageHolder.GetName(id));
+					UbiorbitapiR2Loader::OrbitMetaDataStorageSingleton::GetInstance()
+					.orbitMetaDataStorageHolder.GetName(id));
 				const auto saveGameInfo = new SavegameInfo(id, productId, fileSize, name);
 
 				LOGD_IF(UPLAY_LOG) << "Save - " << " id: " << id << " size: " << fileSize << " name: " << name <<
@@ -247,7 +250,7 @@ inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUn
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	const auto profile = OrbitConfigSingleton::GetInstance().configHolder.config.orbit.profile;
+	const auto profile = UbiorbitapiR2Loader::OrbitConfigSingleton::GetInstance().configHolder.config.orbit.profile;
 
 	const auto accountId = profile.accountId.c_str();
 	const auto userName = profile.userName.c_str();

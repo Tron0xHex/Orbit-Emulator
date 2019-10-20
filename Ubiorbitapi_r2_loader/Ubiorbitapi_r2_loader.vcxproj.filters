@@ -1,124 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Ubiorbitapi_r2_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\IGetSavegameListListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\IGetSavegameReaderListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\IGetSavegameWriterListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\IRemoveSavegameListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\ISavegameReadListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\Interfaces\ISavegameWriteListener.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\OrbitClient.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\SavegameInfo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\SavegameReader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Orbit\SavegameWriter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Consts.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrbitConfigSingleton.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrbitMetaDataStorageSingleton.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Generators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\helper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Orbit.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\OrbitConfig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Profile.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Generators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\helper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Orbit.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\OrbitConfig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonObjects\Profile.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="OrbitConfigHolder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrbitMetaDataStorageHolder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-=======
->>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ubiorbitapi_r2_loader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="Consts.hpp" />
+    <ClInclude Include="JsonObjects\Generators.hpp" />
+    <ClInclude Include="JsonObjects\helper.hpp" />
+    <ClInclude Include="JsonObjects\Orbit.hpp" />
+    <ClInclude Include="JsonObjects\OrbitConfig.hpp" />
+    <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp" />
+    <ClInclude Include="JsonObjects\Profile.hpp" />
+    <ClInclude Include="OrbitConfigHolder.hpp" />
+    <ClInclude Include="OrbitMetaDataStorageHolder.hpp" />
+    <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\IGetSavegameListListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\IGetSavegameReaderListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\IGetSavegameWriterListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\IRemoveSavegameListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\ISavegameReadListener.hpp" />
+    <ClInclude Include="Orbit\Interfaces\ISavegameWriteListener.hpp" />
+    <ClInclude Include="Orbit\OrbitClient.hpp" />
+    <ClInclude Include="Orbit\SavegameInfo.hpp" />
+    <ClInclude Include="Orbit\SavegameReader.hpp" />
+    <ClInclude Include="Orbit\SavegameWriter.hpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="OrbitConfigSingleton.hpp" />
+    <ClInclude Include="OrbitMetaDataStorageSingleton.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="ThirdParty\plog\Appenders\AndroidAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\ColorConsoleAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\ConsoleAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\DebugOutputAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\EventLogAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\IAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\RollingFileAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Converters\NativeEOLConverter.h" />
+    <ClInclude Include="ThirdParty\plog\Converters\UTF8Converter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\CsvFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\FuncMessageFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\MessageOnlyFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\TxtFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Init.h" />
+    <ClInclude Include="ThirdParty\plog\Log.h" />
+    <ClInclude Include="ThirdParty\plog\Logger.h" />
+    <ClInclude Include="ThirdParty\plog\Record.h" />
+    <ClInclude Include="ThirdParty\plog\Severity.h" />
+    <ClInclude Include="ThirdParty\plog\Util.h" />
+    <ClInclude Include="ThirdParty\plog\WinApi.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Orbit.json" />

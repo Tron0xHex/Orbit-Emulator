@@ -23,7 +23,7 @@
     <ProjectGuid>{A8D442CA-96B8-4556-BF83-E7E864C63DDF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Ubiorbitapir2loader</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -166,11 +166,8 @@
     <ClInclude Include="JsonObjects\OrbitConfig.hpp" />
     <ClInclude Include="JsonObjects\OrbitSaveMetaDataStorage.hpp" />
     <ClInclude Include="JsonObjects\Profile.hpp" />
-<<<<<<< HEAD
     <ClInclude Include="OrbitConfigHolder.hpp" />
     <ClInclude Include="OrbitMetaDataStorageHolder.hpp" />
-=======
->>>>>>> db906bf8a0951915dfc06b52d7c0f80328ae82c8
     <ClInclude Include="Orbit\Interfaces\IGetLoginDetailsListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameListListener.hpp" />
     <ClInclude Include="Orbit\Interfaces\IGetSavegameReaderListener.hpp" />
@@ -186,6 +183,58 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="OrbitConfigSingleton.hpp" />
     <ClInclude Include="OrbitMetaDataStorageSingleton.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\json.hpp" />
+    <ClInclude Include="ThirdParty\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="ThirdParty\plog\Appenders\AndroidAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\ColorConsoleAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\ConsoleAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\DebugOutputAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\EventLogAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\IAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Appenders\RollingFileAppender.h" />
+    <ClInclude Include="ThirdParty\plog\Converters\NativeEOLConverter.h" />
+    <ClInclude Include="ThirdParty\plog\Converters\UTF8Converter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\CsvFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\FuncMessageFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\MessageOnlyFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Formatters\TxtFormatter.h" />
+    <ClInclude Include="ThirdParty\plog\Init.h" />
+    <ClInclude Include="ThirdParty\plog\Log.h" />
+    <ClInclude Include="ThirdParty\plog\Logger.h" />
+    <ClInclude Include="ThirdParty\plog\Record.h" />
+    <ClInclude Include="ThirdParty\plog\Severity.h" />
+    <ClInclude Include="ThirdParty\plog\Util.h" />
+    <ClInclude Include="ThirdParty\plog\WinApi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

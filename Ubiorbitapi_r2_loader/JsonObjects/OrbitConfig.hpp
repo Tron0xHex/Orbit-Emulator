@@ -14,7 +14,7 @@
 
 #include "Orbit.hpp"
 
-namespace UbiorbitapiR2Loader
+namespace UbiorbitapiR2Loader::JsonObjects
 {
 	using nlohmann::json;
 

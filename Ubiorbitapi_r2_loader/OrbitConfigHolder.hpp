@@ -3,17 +3,20 @@
 #include "JsonObjects/Generators.hpp"
 #include "JsonObjects/OrbitConfig.hpp"
 
-struct OrbitConfigHolder
+namespace UbiorbitapiR2Loader
 {
-	UbiorbitapiR2Loader::OrbitConfig config;
-	void Open(const path&);
-};
+	struct OrbitConfigHolder
+	{
+		UbiorbitapiR2Loader::JsonObjects::OrbitConfig config;
+		void Open(const path&);
+	};
 
-//------------------------------------------------------------------------------
-inline void OrbitConfigHolder::Open(const path& file)
-{
-	const auto fs = fstream(file, ios::in);
-	const auto jsonString = static_cast<stringstream const&>(stringstream() << fs.rdbuf()).str();
+	//------------------------------------------------------------------------------
+	inline void OrbitConfigHolder::Open(const path& file)
+	{
+		const auto fs = fstream(file, ios::in);
+		const auto jsonString = static_cast<stringstream const&>(stringstream() << fs.rdbuf()).str();
 
-	config = json::parse(jsonString);
+		config = json::parse(jsonString);
+	}
 }
