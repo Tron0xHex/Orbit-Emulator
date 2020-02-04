@@ -1,18 +1,4 @@
-﻿  Ubiorbitapi_r2_loader.cpp
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegameinfo.hpp(9): warning C4251: 'mg::orbitclient::SavegameInfo::name': class 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>' needs to have dll-interface to be used by clients of class 'mg::orbitclient::SavegameInfo'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\xstring(4374): note: see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegamewriter.hpp(13): warning C4251: 'mg::orbitclient::SavegameWriter::fs': class 'std::basic_fstream<char,std::char_traits<char>>' needs to have dll-interface to be used by clients of class 'mg::orbitclient::SavegameWriter'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\iosfwd(627): note: see declaration of 'std::basic_fstream<char,std::char_traits<char>>'
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegamewriter.hpp(14): warning C4251: 'mg::orbitclient::SavegameWriter::filePath': class 'std::filesystem::path' needs to have dll-interface to be used by clients of class 'mg::orbitclient::SavegameWriter'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\filesystem(739): note: see declaration of 'std::filesystem::path'
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegamewriter.hpp(96): warning C4244: 'argument': conversion from 'const std::streamoff' to 'unsigned int', possible loss of data
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegamereader.hpp(9): warning C4251: 'mg::orbitclient::SavegameReader::fs': class 'std::basic_fstream<char,std::char_traits<char>>' needs to have dll-interface to be used by clients of class 'mg::orbitclient::SavegameReader'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\iosfwd(627): note: see declaration of 'std::basic_fstream<char,std::char_traits<char>>'
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\savegamereader.hpp(10): warning C4251: 'mg::orbitclient::SavegameReader::filePath': class 'std::filesystem::path' needs to have dll-interface to be used by clients of class 'mg::orbitclient::SavegameReader'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\filesystem(739): note: see declaration of 'std::filesystem::path'
-d:\github\ubiorbitapi_r2_loader\ubiorbitapi_r2_loader\orbit\orbitclient.hpp(25): warning C4251: 'mg::orbitclient::OrbitClient::requestUniqueId': struct 'std::atomic<int>' needs to have dll-interface to be used by clients of class 'mg::orbitclient::OrbitClient'
-  c:\program files (x86)\microsoft visual studio\2019\professional\vc\tools\msvc\14.16.27023\include\xxatomic(162): note: see declaration of 'std::atomic<int>'
-     Creating library D:\GitHub\Ubiorbitapi_r2_loader\Debug\Ubiorbitapi_r2_loader.lib and object D:\GitHub\Ubiorbitapi_r2_loader\Debug\Ubiorbitapi_r2_loader.exp
+﻿  dllmain.cpp
   Ubiorbitapi_r2_loader.vcxproj -> D:\GitHub\Ubiorbitapi_r2_loader\Debug\Ubiorbitapi_r2_loader.dll
   D:\GitHub\Ubiorbitapi_r2_loader\Ubiorbitapi_r2_loader\Orbit.json
   1 File(s) copied

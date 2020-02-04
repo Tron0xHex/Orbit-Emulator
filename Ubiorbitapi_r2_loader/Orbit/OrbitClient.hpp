@@ -139,18 +139,18 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 //------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::GetSavegameReader(unsigned int requestUniqueId,
                                                             IGetSavegameReaderListener* savegameReaderListenerCallBack,
-                                                            unsigned int productId, unsigned int saveId)
+                                                            unsigned int productId, unsigned int saveGameId)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameReaderListenerCallBack: " <<
  savegameReaderListenerCallBack
-		<< " ProductId: " << productId << " SaveId: " << saveId;
+		<< " ProductId: " << productId << " SaveId: " << saveGameId;
 
 	const auto callBack = reinterpret_cast<IGetSavegameReaderListener::CallBackPtr>(**savegameReaderListenerCallBack->
 		callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	SaveGameReader = std::make_shared<SavegameReader>(GetSavePath(productId, saveId));
+	SaveGameReader = std::make_shared<SavegameReader>(GetSavePath(productId, saveGameId));
 
 	if (callBack != nullptr)
 	{
@@ -186,11 +186,11 @@ inline unsigned int mg::orbitclient::OrbitClient::GetInstallationErrorNum()
 //------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int requestUniqueId,
                                                             IGetSavegameWriterListener* savegameWriterListenerCallBack,
-                                                            unsigned int productId, unsigned int saveId, bool open)
+                                                            unsigned int productId, unsigned int saveGameId, bool open)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetSavegameWriterListenerCallBack: " <<
  savegameWriterListenerCallBack
-		<< " ProductId: " << productId << " SaveId: " << saveId;
+		<< " ProductId: " << productId << " SaveId: " << saveGameId;
 
 	const auto callBack = reinterpret_cast<IGetSavegameWriterListener::CallBackPtr>(**savegameWriterListenerCallBack->
 		callBackPtr);
@@ -204,7 +204,7 @@ inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int request
 		create_directories(gameSavesPath);
 	}
 
-	SaveGameWriter = std::make_shared<SavegameWriter>(GetSavePath(productId, saveId), saveId);
+	SaveGameWriter = std::make_shared<SavegameWriter>(GetSavePath(productId, saveGameId), saveGameId);
 
 	if (callBack != nullptr)
 	{
@@ -215,7 +215,7 @@ inline void mg::orbitclient::OrbitClient::GetSavegameWriter(unsigned int request
 //------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUniqueId,
                                                          IRemoveSavegameListener* removeSavegameListenerCallBack,
-                                                         unsigned int productId, unsigned int saveId)
+                                                         unsigned int productId, unsigned int saveGameId)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " RemoveSavegameListenerCallBack: " <<
  removeSavegameListenerCallBack;
@@ -225,7 +225,7 @@ inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUni
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
 
-	const auto savePath = GetSavePath(productId, saveId);
+	const auto savePath = GetSavePath(productId, saveGameId);
 
 	if (exists(savePath))
 	{
@@ -240,12 +240,12 @@ inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUni
 
 //------------------------------------------------------------------------------
 inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUniqueId,
-                                                          IGetLoginDetailsListener* loginDetailsListenerCallBack)
+                                                          IGetLoginDetailsListener* getLoginDetailsListenerCallBack)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetLoginDetailsListenerCallBack: " <<
- loginDetailsListenerCallBack;
+ getLoginDetailsListenerCallBack;
 
-	const auto callBack = reinterpret_cast<IGetLoginDetailsListener::CallBackPtr>(**loginDetailsListenerCallBack->
+	const auto callBack = reinterpret_cast<IGetLoginDetailsListener::CallBackPtr>(**getLoginDetailsListenerCallBack->
 		callBackPtr);
 
 	LOGD_IF(UPLAY_LOG) << "CallBackPtr: " << callBack;
@@ -258,7 +258,7 @@ inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUn
 
 	if (callBack != nullptr)
 	{
-		callBack(loginDetailsListenerCallBack, requestUniqueId, accountId, userName, password);
+		callBack(getLoginDetailsListenerCallBack, requestUniqueId, accountId, userName, password);
 	}
 }
 
