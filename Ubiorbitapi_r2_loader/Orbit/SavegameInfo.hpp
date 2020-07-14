@@ -2,7 +2,9 @@
 
 #include "../stdafx.h"
 
+// ReSharper disable CppInconsistentNaming
 namespace mg::orbitclient
+// ReSharper restore CppInconsistentNaming
 {
 	class UPLAY_API SavegameInfo
 	{
@@ -29,19 +31,25 @@ inline mg::orbitclient::SavegameInfo::SavegameInfo(const unsigned int id, const 
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline unsigned int mg::orbitclient::SavegameInfo::GetSavegameId()
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	return id;
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline unsigned int mg::orbitclient::SavegameInfo::GetSize()
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	return size;
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline unsigned short const* mg::orbitclient::SavegameInfo::GetName()
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	return reinterpret_cast<const unsigned short*>(&name.c_str()[0]);
 }

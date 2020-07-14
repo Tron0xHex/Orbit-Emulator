@@ -239,7 +239,7 @@ class json_sax_dom_parser
     }
 
     bool parse_error(std::size_t /*unused*/, const std::string& /*unused*/,
-                     const detail::exception& ex)
+                     const exception& ex)
     {
         errored = true;
         if (allow_exceptions)
@@ -250,14 +250,14 @@ class json_sax_dom_parser
                 case 1:
                     JSON_THROW(*reinterpret_cast<const detail::parse_error*>(&ex));
                 case 4:
-                    JSON_THROW(*reinterpret_cast<const detail::out_of_range*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const out_of_range*>(&ex));
                 // LCOV_EXCL_START
                 case 2:
-                    JSON_THROW(*reinterpret_cast<const detail::invalid_iterator*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const invalid_iterator*>(&ex));
                 case 3:
-                    JSON_THROW(*reinterpret_cast<const detail::type_error*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const type_error*>(&ex));
                 case 5:
-                    JSON_THROW(*reinterpret_cast<const detail::other_error*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const other_error*>(&ex));
                 default:
                     assert(false);
                     // LCOV_EXCL_STOP
@@ -496,7 +496,7 @@ class json_sax_dom_callback_parser
     }
 
     bool parse_error(std::size_t /*unused*/, const std::string& /*unused*/,
-                     const detail::exception& ex)
+                     const exception& ex)
     {
         errored = true;
         if (allow_exceptions)
@@ -507,14 +507,14 @@ class json_sax_dom_callback_parser
                 case 1:
                     JSON_THROW(*reinterpret_cast<const detail::parse_error*>(&ex));
                 case 4:
-                    JSON_THROW(*reinterpret_cast<const detail::out_of_range*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const out_of_range*>(&ex));
                 // LCOV_EXCL_START
                 case 2:
-                    JSON_THROW(*reinterpret_cast<const detail::invalid_iterator*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const invalid_iterator*>(&ex));
                 case 3:
-                    JSON_THROW(*reinterpret_cast<const detail::type_error*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const type_error*>(&ex));
                 case 5:
-                    JSON_THROW(*reinterpret_cast<const detail::other_error*>(&ex));
+                    JSON_THROW(*reinterpret_cast<const other_error*>(&ex));
                 default:
                     assert(false);
                     // LCOV_EXCL_STOP
@@ -691,7 +691,7 @@ class json_sax_acceptor
         return true;
     }
 
-    bool parse_error(std::size_t /*unused*/, const std::string& /*unused*/, const detail::exception& /*unused*/)
+    bool parse_error(std::size_t /*unused*/, const std::string& /*unused*/, const exception& /*unused*/)
     {
         return false;
     }

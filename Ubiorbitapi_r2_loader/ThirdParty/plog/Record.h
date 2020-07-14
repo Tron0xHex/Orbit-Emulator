@@ -28,7 +28,7 @@ namespace plog
 
         inline void operator<<(util::nostringstream& stream, const std::string& data)
         {
-            plog::detail::operator<<(stream, data.c_str());
+            detail::operator<<(stream, data.c_str());
         }
 
 #if PLOG_ENABLE_WCHAR_INPUT
@@ -45,7 +45,7 @@ namespace plog
 
         inline void operator<<(util::nostringstream& stream, const std::wstring& data)
         {
-            plog::detail::operator<<(stream, data.c_str());
+            detail::operator<<(stream, data.c_str());
         }
 #endif
 
@@ -168,7 +168,7 @@ namespace plog
         template<typename T>
         Record& operator<<(const T& data)
         {
-            using namespace plog::detail;
+            using namespace detail;
 
             m_message << data;
             return *this;

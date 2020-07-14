@@ -1,6 +1,8 @@
 #pragma once
 
+// ReSharper disable CppInconsistentNaming
 namespace mg::orbitclient
+// ReSharper restore CppInconsistentNaming
 {
 	class ISavegameWriteListener
 	{

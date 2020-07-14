@@ -155,7 +155,7 @@ namespace plog
 #ifdef _WIN32
         inline std::wstring toWide(const char* str)
         {
-            size_t len = ::strlen(str);
+            size_t len = strlen(str);
             std::wstring wstr(len, 0);
 
             if (!wstr.empty())
@@ -266,7 +266,7 @@ namespace plog
 #if defined(_WIN32) && (defined(__BORLANDC__) || defined(__MINGW32__))
                 m_file = ::_wsopen(fileName, _O_CREAT | _O_WRONLY | _O_BINARY, SH_DENYWR, _S_IREAD | _S_IWRITE);
 #elif defined(_WIN32)
-                ::_wsopen_s(&m_file, fileName, _O_CREAT | _O_WRONLY | _O_BINARY, _SH_DENYWR, _S_IREAD | _S_IWRITE);
+                _wsopen_s(&m_file, fileName, _O_CREAT | _O_WRONLY | _O_BINARY, _SH_DENYWR, _S_IREAD | _S_IWRITE);
 #else
                 m_file = ::open(fileName, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 #endif
@@ -291,7 +291,7 @@ namespace plog
             off_t seek(off_t offset, int whence)
             {
 #ifdef _WIN32
-                return m_file != -1 ? ::_lseek(m_file, offset, whence) : -1;
+                return m_file != -1 ? _lseek(m_file, offset, whence) : -1;
 #else
                 return m_file != -1 ? ::lseek(m_file, offset, whence) : -1;
 #endif
@@ -302,7 +302,7 @@ namespace plog
                 if (m_file != -1)
                 {
 #ifdef _WIN32
-                    ::_close(m_file);
+                    _close(m_file);
 #else
                     ::close(m_file);
 #endif
@@ -313,7 +313,7 @@ namespace plog
             static int unlink(const nchar* fileName)
             {
 #ifdef _WIN32
-                return ::_wunlink(fileName);
+                return _wunlink(fileName);
 #else
                 return ::unlink(fileName);
 #endif

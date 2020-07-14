@@ -14,11 +14,15 @@
 #include "Interfaces/IGetSavegameReaderListener.hpp"
 #include "Interfaces/IGetLoginDetailsListener.hpp"
 
+// TODO: Use singleton ?
+
 static shared_ptr<mg::orbitclient::SavegameReader> SaveGameReader{nullptr};
 static shared_ptr<mg::orbitclient::SavegameWriter> SaveGameWriter{nullptr};
 static vector<mg::orbitclient::SavegameInfo*> SaveInfoList{nullptr};
 
+// ReSharper disable CppInconsistentNaming
 namespace mg::orbitclient
+// ReSharper restore CppInconsistentNaming
 {
 	class UPLAY_API OrbitClient
 	{
@@ -33,12 +37,12 @@ namespace mg::orbitclient
 		void GetSavegameList(unsigned int requestUniqueId, IGetSavegameListListener* savegameListListenerCallBack,
 		                     unsigned int productId);
 		void GetSavegameWriter(unsigned int requestUniqueId, IGetSavegameWriterListener* savegameWriterListenerCallBack,
-		                       unsigned int productId, unsigned int saveGameId, bool open);
+		                       unsigned int productId, unsigned int saveId, bool open);
 		void GetSavegameReader(unsigned int requestUniqueId, IGetSavegameReaderListener* savegameReaderListenerCallBack,
-		                       unsigned int productId, unsigned int saveGameId);
+		                       unsigned int productId, unsigned int saveId);
 		void RemoveSavegame(unsigned int requestUniqueId, IRemoveSavegameListener* removeSavegameListenerCallBack,
-		                    unsigned int productId, unsigned int saveGameId);
-		void GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener* getLoginDetailsListenerCallBack);
+		                    unsigned int productId, unsigned int saveId);
+		void GetLoginDetails(unsigned int requestUniqueId, IGetLoginDetailsListener* loginDetailsListenerCallBack);
 		unsigned int GetRequestUniqueId();
 		unsigned short* GetInstallationErrorString(char const*);
 		unsigned int GetInstallationErrorNum();
@@ -54,7 +58,9 @@ inline mg::orbitclient::OrbitClient::OrbitClient()
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline path mg::orbitclient::OrbitClient::GetSavePath(unsigned int productId, unsigned int saveId)
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	return path(UbiorbitapiR2Loader::OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(
 			to_string(productId)) /
@@ -62,14 +68,20 @@ inline path mg::orbitclient::OrbitClient::GetSavePath(unsigned int productId, un
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppParameterMayBeConst
+// ReSharper disable CppMemberFunctionMayBeConst
 inline path mg::orbitclient::OrbitClient::GetSavesPath(unsigned int productId)
+// ReSharper restore CppMemberFunctionMayBeConst
+// ReSharper restore CppParameterMayBeConst
 {
 	return path(UbiorbitapiR2Loader::OrbitConfigSingleton::GetInstance().configHolder.config.orbit.saves) / path(
 		to_string(productId));
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline void mg::orbitclient::OrbitClient::StartProcess(unsigned short*, unsigned short*, unsigned short*)
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 }
@@ -122,8 +134,7 @@ inline void mg::orbitclient::OrbitClient::GetSavegameList(unsigned int requestUn
 					.orbitMetaDataStorageHolder.GetName(id));
 				const auto saveGameInfo = new SavegameInfo(id, productId, fileSize, name);
 
-				LOGD_IF(UPLAY_LOG) << "Save - " << " id: " << id << " size: " << fileSize << " name: " << name <<
- " this ptr: " << saveGameInfo;
+				LOGD_IF(UPLAY_LOG) << "Save - " << " id: " << id << " size: " << fileSize << " name: " << name << " this ptr: " << saveGameInfo;
 
 				SaveInfoList.push_back(saveGameInfo);
 			}
@@ -159,25 +170,33 @@ inline void mg::orbitclient::OrbitClient::GetSavegameReader(unsigned int request
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeStatic
 inline void mg::orbitclient::OrbitClient::Update()
+// ReSharper restore CppMemberFunctionMayBeStatic
 {
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeStatic
 inline bool mg::orbitclient::OrbitClient::StartLauncher(unsigned int, unsigned int, char const*, char const*)
+// ReSharper restore CppMemberFunctionMayBeStatic
 {
 	return false;
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline unsigned short* mg::orbitclient::OrbitClient::GetInstallationErrorString(char const* err)
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 	return nullptr;
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline unsigned int mg::orbitclient::OrbitClient::GetInstallationErrorNum()
+// ReSharper restore CppMemberFunctionMayBeConst
 {
 	LOGD_IF(UPLAY_LOG) << "__CALL__";
 	return 0;
@@ -239,7 +258,9 @@ inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestUni
 }
 
 //------------------------------------------------------------------------------
+// ReSharper disable CppMemberFunctionMayBeConst
 inline void mg::orbitclient::OrbitClient::GetLoginDetails(unsigned int requestUniqueId,
+                                                          // ReSharper restore CppMemberFunctionMayBeConst
                                                           IGetLoginDetailsListener* loginDetailsListenerCallBack)
 {
 	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " GetLoginDetailsListenerCallBack: " <<

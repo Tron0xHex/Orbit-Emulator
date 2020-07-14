@@ -450,9 +450,9 @@ class serializer
                                 }
                                 else
                                 {
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xEF');
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBF');
-                                    string_buffer[bytes++] = detail::binary_writer<BasicJsonType, char>::to_char_type('\xBD');
+                                    string_buffer[bytes++] = binary_writer<BasicJsonType, char>::to_char_type('\xEF');
+                                    string_buffer[bytes++] = binary_writer<BasicJsonType, char>::to_char_type('\xBF');
+                                    string_buffer[bytes++] = binary_writer<BasicJsonType, char>::to_char_type('\xBD');
                                 }
                                 bytes_after_last_accept = bytes;
                             }
@@ -605,7 +605,7 @@ class serializer
     void dump_float(number_float_t x, std::true_type /*is_ieee_single_or_double*/)
     {
         char* begin = number_buffer.data();
-        char* end = ::nlohmann::detail::to_chars(begin, begin + number_buffer.size(), x);
+        char* end = detail::to_chars(begin, begin + number_buffer.size(), x);
 
         o->write_characters(begin, static_cast<size_t>(end - begin));
     }

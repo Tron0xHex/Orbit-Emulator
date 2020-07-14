@@ -2,7 +2,9 @@
 
 #include "Interfaces/ISavegameReadListener.hpp"
 
+// ReSharper disable CppInconsistentNaming
 namespace mg::orbitclient
+// ReSharper restore CppInconsistentNaming
 {
 	class UPLAY_API SavegameReader
 	{

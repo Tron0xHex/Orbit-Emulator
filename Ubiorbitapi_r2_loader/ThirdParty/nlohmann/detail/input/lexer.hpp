@@ -71,9 +71,9 @@ class lexer
                 return "null literal";
             case token_type::value_string:
                 return "string literal";
-            case lexer::token_type::value_unsigned:
-            case lexer::token_type::value_integer:
-            case lexer::token_type::value_float:
+            case token_type::value_unsigned:
+            case token_type::value_integer:
+            case token_type::value_float:
                 return "number literal";
             case token_type::begin_array:
                 return "'['";
@@ -100,7 +100,7 @@ class lexer
         }
     }
 
-    explicit lexer(detail::input_adapter_t&& adapter)
+    explicit lexer(input_adapter_t&& adapter)
         : ia(std::move(adapter)), decimal_point_char(get_decimal_point()) {}
 
     // delete because of pointer members
@@ -1474,7 +1474,7 @@ scan_number_done:
 
   private:
     /// input adapter
-    detail::input_adapter_t ia = nullptr;
+    input_adapter_t ia = nullptr;
 
     /// the current character
     std::char_traits<char>::int_type current = std::char_traits<char>::eof();

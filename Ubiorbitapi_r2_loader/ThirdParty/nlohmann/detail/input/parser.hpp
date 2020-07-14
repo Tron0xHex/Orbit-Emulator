@@ -59,7 +59,7 @@ class parser
         std::function<bool(int depth, parse_event_t event, BasicJsonType& parsed)>;
 
     /// a parser reading from an input adapter
-    explicit parser(detail::input_adapter_t&& adapter,
+    explicit parser(input_adapter_t&& adapter,
                     const parser_callback_t cb = nullptr,
                     const bool allow_exceptions_ = true)
         : callback(cb), m_lexer(std::move(adapter)), allow_exceptions(allow_exceptions_)

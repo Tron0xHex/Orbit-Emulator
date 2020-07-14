@@ -2,7 +2,9 @@
 
 #include "../SavegameInfo.hpp"
 
+// ReSharper disable CppInconsistentNaming
 namespace mg::orbitclient
+// ReSharper restore CppInconsistentNaming
 {
 	class IGetSavegameListListener
 	{

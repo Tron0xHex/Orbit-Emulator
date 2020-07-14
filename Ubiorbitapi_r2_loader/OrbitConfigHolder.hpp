@@ -7,7 +7,7 @@ namespace UbiorbitapiR2Loader
 {
 	struct OrbitConfigHolder
 	{
-		UbiorbitapiR2Loader::JsonObjects::OrbitConfig config;
+		JsonObjects::OrbitConfig config;
 		void Open(const path&);
 	};
 
@@ -17,6 +17,6 @@ namespace UbiorbitapiR2Loader
 		const auto fs = fstream(file, ios::in);
 		const auto jsonString = static_cast<stringstream const&>(stringstream() << fs.rdbuf()).str();
 
-		config = json::parse(jsonString);
+		config = nlohmann::json::parse(jsonString);
 	}
 }
