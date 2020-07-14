@@ -23,16 +23,16 @@ namespace mg::orbitclient
 }
 
 //------------------------------------------------------------------------------
-inline mg::orbitclient::SavegameWriter::SavegameWriter(const path& filePath, const unsigned int saveId)
+inline mg::orbitclient::SavegameWriter::SavegameWriter(const path& savePath, const unsigned int saveId)
 {
 	this->saveId = saveId;
-	this->filePath = filePath;
+	this->filePath = savePath;
 
 	fs = fstream(filePath, ios::out | ios::binary | ios::trunc);
 
 	if (!fs)
 	{
-		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << filePath.string();
+		LOGD_IF(UPLAY_LOG) << "Unable to open file: " << savePath.string();
 	}
 }
 
@@ -48,11 +48,11 @@ inline void mg::orbitclient::SavegameWriter::Close(bool arg)
 }
 
 //------------------------------------------------------------------------------
-inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
+inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestId,
                                                    ISavegameWriteListener* savegameWriteListenerCallBack, void* buff,
                                                    unsigned int numberOfBytes)
 {
-	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestUniqueId << " SavegameWriteListenerCallBack: " <<
+	LOGD_IF(UPLAY_LOG) << "RequestUniqueId: " << requestId << " SavegameWriteListenerCallBack: " <<
 		savegameWriteListenerCallBack
 		<< " Buff: " << buff << " NumberOfBytes: " << numberOfBytes;
 
@@ -76,7 +76,7 @@ inline void mg::orbitclient::SavegameWriter::Write(unsigned int requestUniqueId,
 
 		if (bytesCount > 0 && callBack != nullptr)
 		{
-			callBack(savegameWriteListenerCallBack, requestUniqueId, bytesCount);
+			callBack(savegameWriteListenerCallBack, requestId, bytesCount);
 		}
 	}
 	else
