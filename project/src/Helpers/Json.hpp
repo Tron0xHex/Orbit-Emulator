@@ -7,6 +7,8 @@ namespace UbiorbitapiR2Loader
 	using namespace std;
 	using namespace cereal;
 
+	using std::filesystem::path;
+
 	template <class T>
 	void SerializeJsonToFile(const path &file, const T &data)
 	{
@@ -17,7 +19,7 @@ namespace UbiorbitapiR2Loader
 			return;
 		}
 
-		Fail(fmt::format("File write error: {}", path.string()), true);
+		Fail(fmt::format("File write error: {}", file.string()), true);
 	}
 
 	template <class T>
@@ -30,6 +32,6 @@ namespace UbiorbitapiR2Loader
 			return;
 		}
 
-		Fail(fmt::format("File read error: {}", path.string()), true);
+		Fail(fmt::format("File read error: {}", file.string()), true);
 	}
 } // namespace UbiorbitapiR2Loader
