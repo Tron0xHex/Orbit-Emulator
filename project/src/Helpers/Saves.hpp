@@ -6,13 +6,12 @@
 #include "src/Utils/Singleton.hpp"
 #include "src/Objects/OrbitConfig.hpp"
 
+#include "Failure.hpp"
+
 namespace UbiorbitapiR2Loader
 {
 	using namespace std;
 	using std::filesystem::path;
-
-	// ReSharper disable once CppInconsistentNaming
-	namespace fs = std::filesystem;
 
 	inline path GetSavesPath(const unsigned int productId)
 	{
@@ -52,33 +51,35 @@ namespace UbiorbitapiR2Loader
 		return namePath;
 	}
 
-	inline string ReadSaveName(const path &path)
+	// ReSharper disable once CppNotAllPathsReturnValue
+	inline string ReadSaveName(const path &file)
 	{
-		if (const auto fs = fstream(path, ios::in); fs)
+		if (const auto fs = fstream(file, ios::in); fs)
 		{
 			stringstream buffer;
 			buffer << fs.rdbuf();
 			return buffer.str();
 		}
 
-		Fail(fmt::format("File read error: {}", path.string()), true);
+		Fail(fmt::format("File read error: {}", file.string()), true);
 	}
 
-	inline void WriteSaveName(const path &path, const string &content)
+	inline void WriteSaveName(const path &file, const string &content)
 	{
-		if (auto fs = fstream(path, ios::out | ios::trunc); fs)
+		if (auto fs = fstream(file, ios::out | ios::trunc); fs)
 		{
 			fs.write(content.data(), content.size());
 			return;
 		}
 
-		Fail(fmt::format("File write error: {}", path.string()), true);
+		Fail(fmt::format("File write error: {}", file.string()), true);
 	}
 
-	inline unsigned int ReadSave(const path &path, const unsigned int offset, void *buff,
+	// ReSharper disable once CppNotAllPathsReturnValue
+	inline unsigned int ReadSave(const path &file, const unsigned int offset, void *buff,
 								 const unsigned int numberOfBytes)
 	{
-		if (auto fs = fstream(path, ios::in | ios::binary); fs)
+		if (auto fs = fstream(file, ios::in | ios::binary); fs)
 		{
 			fs.seekg(offset, ios::beg);
 			fs.read(&static_cast<char *>(buff)[0], numberOfBytes);
@@ -87,22 +88,22 @@ namespace UbiorbitapiR2Loader
 			return bytesCount;
 		}
 
-		Fail(fmt::format("File read error: {}", path.string()), true);
+		Fail(fmt::format("File read error: {}", file.string()), true);
 	}
 
-	inline unsigned int WriteSave(const path &path, void *buff, const unsigned int numberOfBytes)
+	// ReSharper disable once CppNotAllPathsReturnValue
+	inline unsigned int WriteSave(const path &file, void *buff, const unsigned int numberOfBytes)
 	{
-		if (auto fs = fstream(path, ios::out | ios::binary | ios::trunc); fs)
+		if (auto fs = fstream(file, ios::out | ios::binary | ios::trunc); fs)
 		{
 			fs.seekp(0, ios::beg);
 			const auto currentPosition = fs.tellp();
+			fs.write(&static_cast<char *>(buff)[0], numberOfBytes);
 
-			fs.write(&reinterpret_cast<char *>(buff)[0], numberOfBytes);
-			const auto bytesCount = fs.tellp() - currentPosition;
-
+			const auto bytesCount = static_cast<unsigned int>(fs.tellp() - currentPosition);
 			return bytesCount;
 		}
 
-		Fail(fmt::format("File write error: {}", path.string()), true);
+		Fail(fmt::format("File write error: {}", file.string()), true);
 	}
 } // namespace UbiorbitapiR2Loader

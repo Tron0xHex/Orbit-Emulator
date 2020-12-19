@@ -2,6 +2,8 @@
 
 #include "src/pch.h"
 
+#include "Failure.hpp"
+
 namespace UbiorbitapiR2Loader
 {
 	using namespace std;

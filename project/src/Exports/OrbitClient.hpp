@@ -176,10 +176,10 @@ inline void mg::orbitclient::OrbitClient::GetSavegameReader(unsigned int request
 		return;
 	}
 
-	const auto savesPath = GetSavePath(productId, saveGameId);
+	const auto savePath = GetSavePath(productId, saveGameId);
 
 	Singleton<SharedSavegameReader>::Instance().Set(
-		make_shared<SavegameReader>(savesPath));
+		make_shared<SavegameReader>(savePath));
 
 	const auto saveGameReader = Singleton<SharedSavegameReader>::Instance().Get();
 
@@ -257,8 +257,9 @@ inline void mg::orbitclient::OrbitClient::RemoveSavegame(unsigned int requestId,
 
 	// ReSharper disable CppRedundantQualifier
 
-	const auto savesPath = GetSavePath(productId, saveGameId);
-	const auto isDeleted = fs::remove(savesPath);
+	const auto savePath = GetSavePath(productId, saveGameId);
+	const auto saveNamePath = GetSaveNamePath(productId, saveGameId);
+	const auto isDeleted = fs::remove(savePath) && fs::remove(saveNamePath);
 
 	callBack(removeSavegameListenerCallBack, requestId, isDeleted);
 
